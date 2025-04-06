@@ -105,6 +105,7 @@
 📎 블로그 링크 예시:
 - 김파머: [https://myblog.com/kpm-springmvc](https://myblog.com/kpm-springmvc)
 - 이민형: https://www.notion.so/5-MVC-1cde27684a5d80f482e9e4fa36bf83fa?pvs=4
+- 김지윤: https://utopian-cause-624.notion.site/5-7-1c9cffd0881f80a69963e4a559e2f6e6
 ---
 
 ## 🛠️ 과제 6 - DB 연동 및 게시판 CRUD 구현

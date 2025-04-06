@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시판 목록</title>
+</head>
+<body>
+<h1>게시글 목록</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>작성 시간</th>
+        <th>상세보기</th>
+    </tr>
+    <tr th:each="board, iterStat : ${boards}">
+        <td th:text="${iterStat.index + 1}"></td> <!-- 여기! 0부터 시작이라 +1 -->
+        <td th:text="${board.title}"></td>
+        <td th:text="${board.createdAt}"></td>
+        <td><a th:href="@{/boards/{id}(id=${board.id})}">보기</a></td>
+    </tr>
+
+</table>
+
+<!-- 경로 수정: 새 글 작성 폼 -->
+<a href="/boards/new">새 글 작성</a>
+
+</body>
+</html>

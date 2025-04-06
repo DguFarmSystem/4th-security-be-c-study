@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 작성/수정</title>
+</head>
+<body>
+<h1 th:text="${board != null} ? '게시글 수정' : '게시글 작성'"></h1>
+
+<form th:action="${board != null} ? @{'/boards/edit/' + ${board.id}} : @{/boards}" method="post">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" th:value="${board != null} ? ${board.title} : ''" required>
+    <br>
+    <label for="content">내용:</label>
+    <textarea id="content" name="content" required th:text="${board != null} ? ${board.content} : ''"></textarea>
+    <br>
+    <button type="submit" th:text="${board != null} ? '수정하기' : '작성하기'"></button>
+</form>
+<a href="/boards">목록으로</a>
+</body>
+</html>

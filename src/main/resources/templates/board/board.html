@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" href="/css/board.css">
+    <script>
+        // JavaScript로 수정 폼 표시
+        function showEditForm(button) {
+            // 버튼의 data-* 속성에서 데이터 읽기
+            const id = button.dataset.id;
+            const title = button.dataset.title;
+            const content = button.dataset.content;
+
+            const row = document.getElementById(`row-${id}`);
+            row.innerHTML = `
+            <td colspan="5">
+            <form action="/board/update/${id}" method="post">
+                <input type="text" name="title" value="${title}" placeholder="제목">
+                <textarea name="content" placeholder="내용">${content}</textarea>
+                <button type="submit">저장</button>
+                <button type="button" onclick="cancelEdit(${id}, '${title}', '${content}')">취소</button>
+            </form>
+        </td>`;
+        }
+
+        // JavaScript로 수정 취소
+        function cancelEdit(id, title, content) {
+            const row = document.getElementById(`row-${id}`);
+            row.innerHTML = `
+        <td>${id}</td>
+        <td>${title}</td>
+        <td>${content}</td>
+        <td>
+            <button
+                data-id="${id}"
+                data-title="${title}"
+                data-content="${content}"
+                onclick="showEditForm(this)">
+                수정
+            </button>
+        </td>
+        <td>
+            <form th:action="@{/board/delete/{id}(id=${id})}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+        </td>`;
+        }
+    </script>
+</head>
+<body>
+<h1>게시판</h1>
+
+<!-- 게시물 리스트 출력 -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- boardList를 반복하며 각 게시물의 정보를 출력 -->
+    <tr th:each="board : ${boardList}" th:id="'row-'+${board.id}">
+        <td th:text="${board.id}">id</td> <!-- 게시물 번호 -->
+        <td th:text="${board.title}">제목</td> <!-- 게시물 제목 -->
+        <td th:text="${board.content}">내용</td> <!-- 게시물 내용 -->
+        <!-- 수정 버튼 -->
+        <td>
+            <button
+                    th:attr="data-id=${board.id},data-title=${board.title},data-content=${board.content}"
+                    onclick="showEditForm(this)">
+                수정
+            </button>
+        </td>
+        <!-- 삭제 버튼 -->
+        <td><form th:action="@{/board/delete/{id}(id=${board.id})}" method="post"><button type="submit">삭제</button></form></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
